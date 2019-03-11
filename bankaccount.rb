@@ -1,7 +1,7 @@
 def welcome(balance)
     puts "Welcome to the banking app, please enter 'b' for balance or 'e' for exit:"
     response = gets.chomp.downcase
-          case response
+        case response
               when "b"
                  bal(balance)
               when "e"
@@ -10,19 +10,22 @@ def welcome(balance)
                  clear
                  error
                  welcome(balance)
-          end
+            end
+        end
+    end
 end
 
 puts welcome(balance)
 
-balance = array.new
+balance = Array.new
+
 history = Array.new
 
 def his(balance, history)
     puts "This is your history"
     puts history
     puts bal(balance, history)
-    end
+end
 
 def bal(balance)
     puts "your balance is $#{balance.sum}"
@@ -46,19 +49,21 @@ def withd (balance, history)
     if balance.sum < input
         puts error
     else
-    puts "you have chosen to withdraw $#{input}"
-    balance.push -input
-    history << -inputputs bal(balance, history)
+        puts "you have chosen to withdraw $#{input}"
+        balance.push -input
+        history << -inputputs 
+        bal(balance, history)
+    end
 end
 
 def exit
     puts "Thank you for banking with us!"
-    end
+end
 
 def error
     puts "Error! Invalid selection, please try again."
 end
 
-    def clear
+def clear
     system("clear")
 end
