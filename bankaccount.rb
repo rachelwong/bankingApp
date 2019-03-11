@@ -1,25 +1,10 @@
-def welcome(balance)
-    puts "Welcome to the banking app, please enter 'b' for balance or 'e' for exit:"
-    response = gets.chomp.downcase
-        case response
-              when "b"
-                 bal(balance)
-              when "e"
-                 exit
-              else
-                 clear
-                 error
-                 welcome(balance)
-            end
-        end
-    end
-end
-
-puts welcome(balance)
-
 balance = Array.new
-
 history = Array.new
+
+def bal(balance)
+    puts "your balance is $#{balance.sum}"
+    puts welcome(balance, history)
+end
 
 def his(balance, history)
     puts "This is your history"
@@ -27,16 +12,11 @@ def his(balance, history)
     puts bal(balance, history)
 end
 
-def bal(balance)
-    puts "your balance is $#{balance.sum}"
-    puts welcome(balance)
-end
-
 def dep(balance, history)
     puts "How much would you like to deposit"
     input = ' '
     input = gets.chomp.to_i
-    puts "you are depositing$#{input}"
+    puts "You are depositing$#{input}"
     balance.push input
     history << input
     puts bal(balance, history)
@@ -49,10 +29,10 @@ def withd (balance, history)
     if balance.sum < input
         puts error
     else
-        puts "you have chosen to withdraw $#{input}"
+        puts "You have chosen to withdraw $#{input}"
         balance.push -input
         history << -inputputs 
-        bal(balance, history)
+        puts bal(balance, history)
     end
 end
 
@@ -67,3 +47,31 @@ end
 def clear
     system("clear")
 end
+
+def welcome(balance)
+    puts "Welcome to the banking app, please enter 'b' for balance or 'e' for exit:"
+    response = gets.chomp.downcase
+    case response
+        when "b"
+            bal(balance, history)
+        when "w"
+            withd(balance, history)
+        when "e"
+            exit
+        when "h"
+            his(balance, history)
+        when "d"
+            dep(balance, history)
+        else
+            clear
+            error
+            welcome(balance, history)
+    end
+end
+
+puts welcome(balance)
+
+
+
+
+
