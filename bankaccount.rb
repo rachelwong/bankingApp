@@ -1,67 +1,76 @@
+# initiliase balance and history which will store an cumulative tracking of changes 
 balance = Array.new
 history = Array.new
 
-def bal(balance)
+# Display current balance
+def balance(balance)
     puts "your balance is $#{balance.sum}"
     puts welcome(balance, history)
 end
 
-def his(balance, history)
+# Display balance history 
+def show_history(balance, history)
     puts "This is your history"
     puts history
-    puts bal(balance, history)
+    puts balance(balance, history)
 end
 
-def dep(balance, history)
+# Deposit method with no error handling
+def deposit(balance, history)
     puts "How much would you like to deposit"
     input = ' '
     input = gets.chomp.to_i
-    puts "You are depositing$#{input}"
+    puts "You are depositing $#{input}"
     balance.push input
     history << input
-    puts bal(balance, history)
+    puts balance(balance, history)
 end
 
-def withd (balance, history)
+# Withdrawal method as long as enough balance to withdraw
+def withdraw (balance, history)
     puts "How much would you like to withdraw?"
     input = ' '
-    input = gets.comp.to_i
+    input = gets.chomp.to_i
     if balance.sum < input
         puts error
     else
         puts "You have chosen to withdraw $#{input}"
         balance.push -input
-        history << -inputputs 
-        puts bal(balance, history)
+        history << -input 
+        puts balance(balance, history)
     end
 end
 
+# Output exit message
 def exit
     puts "Thank you for banking with us!"
 end
 
+# Output error message
 def error
     puts "Error! Invalid selection, please try again."
 end
 
+# Clear screen
 def clear
     system("clear")
 end
 
+# Welcome screen and switchboard logic handling user input to menu 
 def welcome(balance)
     puts "Welcome to the banking app, please enter 'b' for balance or 'e' for exit:"
     response = gets.chomp.downcase
     case response
         when "b"
-            bal(balance, history)
+            balance(balance, history)
         when "w"
-            withd(balance, history)
+            withdraw(balance, history)
         when "e"
             exit
         when "h"
-            his(balance, history)
+            show_history(balance, history)
         when "d"
-            dep(balance, history)
+            deposit(balance, history)
         else
             clear
             error
@@ -69,9 +78,5 @@ def welcome(balance)
     end
 end
 
+# initiate program
 puts welcome(balance)
-
-
-
-
-
