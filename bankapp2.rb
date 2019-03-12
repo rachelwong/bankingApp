@@ -18,7 +18,7 @@ class Account
         input = gets.chomp.to_s
         case input
             when "b"
-                balance_display(balance)
+                balance_display(bqalance)
             when "d"
                 deposit(balance)
             when "w"
