@@ -20,18 +20,26 @@ class Account
 
     # deposit action
     def deposit(amount)
-        check_value
+        if check_value?
+            balance += amount
+            return balance
+        end
     end
 
     # withdrawal action
     def withdrawal(amount)
+        if check_value? && balance > amount
+            balance -= amount
+            return balance
+        end
     end
 
-    def check_value(amount)
+    # checks user input amount is not negative
+    def check_value?(amount)
         if amount > 0
             return true
         else
-            error
+            UserInput.error
         end
     end
 end
@@ -42,8 +50,28 @@ class UserInput
         puts "What would you like to do?"
         puts "|| {D}eposit || {W}ithdrawal || {B}alance Update ||"
         puts    
+        command = gets.chomp.downcase.to_s
         STDIN.getch
         print "            \r" # extra space to overwrite in case next sentence is short.      
+        case command
+        when "d"
+            puts "You have chosen Deposit."
+            puts "How much would you like to deposit:"
+            amount = gets.chomp.to_i
+            STDIN.getch
+            print "            \r" # extra space to overwrite in case next sentence is short.          
+            Account.deposit(amount)
+        when "w"
+            puts "You have chosen Withdrawal."
+            puts "How much would you like to withdraw:"
+            amount = gets.chomp.to_i
+            STDIN.getch
+            print "            \r" # extra space to overwrite in case next sentence is short.          
+            Account.withdrawal(amount)
+        when "b"
+        else
+            error
+        end
     end
 
     def error
