@@ -29,16 +29,17 @@ class Account
 
     # withdrawal action
     def withdrawal(amount)
-        puts "I am here."
         if check_value? && balance > amount
             balance -= amount
             return balance
         end
     end
     
+    # display the latest update to balance variable
     def show_balance(balance)
         puts "Your current balance is #{@balance}."
     end
+
     # checks user input amount is not negative
     def check_value?(amount)
         if amount > 0
@@ -62,7 +63,7 @@ class UserInput
             puts "You have chosen Deposit."
             puts "How much would you like to deposit:"
             amount = gets.chomp.to_i
-            Account.deposit(amount)
+            my_account.deposit(amount)
         when "w"
             puts "You have chosen Withdrawal."
             puts "How much would you like to withdraw:"
@@ -90,20 +91,17 @@ class PinValidator
     attr_reader :pin
     attr_accessor :name
 
-    def initialize(name, pin)
-        @pin = pin
-        @name = name
-    end
-
     def check_pin
         puts "What is your name?"
         @name = gets.chomp.downcase.to_s
 
         puts "What is your pin?"
-        @pin = gets.chomp.to_i
+        @pin = gets.chomp # this is not an int because it is made into an array of strings
 
         for line in File.open("login.txt")
-            if @name == line[0] && @pin == line[1]
+            check = line.split(" ")
+            p check
+            if @name == check[0] && @pin == check[1] # check[1].to_i
                 puts "Log in successful"
                 return true
             else
@@ -114,6 +112,7 @@ class PinValidator
     end
 end
 
+# create a child class to account
 class KidsAccount < Account
     attr_accessor :consent, :balance, :name
     attr_reader :pin
@@ -135,6 +134,13 @@ class KidsAccount < Account
         super
     end
 
+    def get_constent
+    end
 end
 
-my_account = Account.new("Rachel", 1234, 200)
+def start
+    validator = PinValidator.new()
+    validator.check_pin
+end
+
+start
