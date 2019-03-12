@@ -7,16 +7,15 @@ class Account
     attr_accessor :balance
 
     # creates new account 
-    def initialize(name, pin=1234, balance=100)
+    def initialize(name, pin=1234, balance)
         @name = name
         @pin = pin
         @balance = balance
         puts "Hi #{@name}, welcome to the banking app."
-        puts "Your account has been created."
         puts "Press any key to continue."
         STDIN.getch
         print "            \r" # extra space to overwrite in case next sentence is short.   
-        UserInput.new.menu(balance)   
+        UserInput.new.menu(balance)
     end
 
     # deposit action
@@ -51,8 +50,10 @@ class Account
 end
 
 class UserInput
-
     def menu(balance)
+        puts " ---------- YOUR BALANCE ---------------- "
+        my_account.show_balance(balance)
+        puts " --------------- MENU ------------------- "
         puts "What would you like to do?"
         puts "|| {D}eposit || {W}ithdrawal || {B}alance Update || {Q}uit ||"
         puts    
@@ -68,10 +69,10 @@ class UserInput
             puts "You have chosen Withdrawal."
             puts "How much would you like to withdraw:"
             amount = gets.chomp.to_i
-            Account.withdrawal(amount)
+            my_account.withdrawal(amount)
         when "b"
             puts "You have chosen to see your balance."
-            Account.show_balance(balance)
+            my_accounts.show_balance(balance)
         when "q"
             puts "Good bye!"
         else
@@ -98,16 +99,29 @@ class PinValidator
         puts "What is your pin?"
         @pin = gets.chomp # this is not an int because it is made into an array of strings
 
+        # Matt's idea
+        login = false
+
         for line in File.open("login.txt")
             check = line.split(" ")
-            p check
+            # p check
+
+            # Matt's idea
             if @name == check[0] && @pin == check[1] # check[1].to_i
-                puts "Log in successful"
-                return true
-            else
-                puts "Invalid login"
-                return false
+                login = true
+                break
             end
+        end
+        # Matt's idea
+        if login == true
+            puts "Log in successful."
+            name = check[0]
+            pin = check[1]
+            balance = check[2].to_i
+            my_account = Account.new(name, pin, balance)
+            my_account.show_balance(balance)
+        else
+            puts "Invalid log in. Good-bye!"
         end
     end
 end
