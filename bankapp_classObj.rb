@@ -71,7 +71,7 @@ class UserInput
 
     # Menu switchboard
     def menu(account)
-        system{"clear"}
+        system("clear")
         account.show_balance() # always display balance before menu prompt
         puts 
         puts
