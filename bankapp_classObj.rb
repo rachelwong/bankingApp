@@ -28,6 +28,11 @@ class Account
             # Increment & update the balance with the user input amount
             @balance = @balance + amount
             return @balance
+        # catch-all for negative amounts or string entered
+        else 
+            puts "Invalid Amount! Please try again."
+            STDIN.getch
+            print "            \r" # extra space to overwrite in case next sentence is short.   
         end
     end
 
